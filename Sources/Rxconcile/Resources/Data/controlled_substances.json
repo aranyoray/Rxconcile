@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "updated": "2026-06-19",
+  "source": "Seed list of common controlled-substance ingredients mapped to DEA schedule. Regenerate/expand the `ndc` map from openFDA with scripts/build_controlled_substances.py.",
+  "ingredients": {
+    "oxycodone": "II", "hydrocodone": "II", "fentanyl": "II", "morphine": "II",
+    "methylphenidate": "II", "ritalin": "II", "adderall": "II", "amphetamine": "II",
+    "dextroamphetamine": "II", "lisdexamfetamine": "II", "vyvanse": "II",
+    "methadone": "II", "hydromorphone": "II", "oxymorphone": "II", "tapentadol": "II",
+    "secobarbital": "II", "pentobarbital": "II",
+    "codeine": "III", "ketamine": "III", "buprenorphine": "III", "testosterone": "III",
+    "anabolic": "III", "paregoric": "III",
+    "alprazolam": "IV", "xanax": "IV", "lorazepam": "IV", "ativan": "IV",
+    "diazepam": "IV", "valium": "IV", "clonazepam": "IV", "klonopin": "IV",
+    "temazepam": "IV", "zolpidem": "IV", "ambien": "IV", "eszopiclone": "IV",
+    "lunesta": "IV", "tramadol": "IV", "carisoprodol": "IV", "phentermine": "IV",
+    "lyrica": "V", "pregabalin": "V", "lacosamide": "V", "lomotil": "V"
+  },
+  "ndc": {}
+}
