@@ -79,8 +79,23 @@ device and the relevant entitlements.
 
 ## Status
 
-MVP scaffold: medication CRUD, reminders, triage engine, QR reconciliation,
-voice/TTS, settings. Not yet implemented: live NDC/DEA dataset integration,
-VisionKit label OCR capture, CallKit incoming-call presentation, the donor
-transfer PDF generator, and full per-state rule data. These are wired as clear
-extension points.
+Feature-complete MVP, structured for App Store submission:
+
+- Medication CRUD, on-device persistence, onboarding flow
+- Camera **label scanning** with on-device Vision OCR (`LabelScanner`) that fills
+  drug name / NDC / expiration, with a PHI-redaction tip
+- Reminders with escalation ladder + actionable **Taken / Snooze** notification
+  buttons (`AppDelegate`)
+- Triage engine → donation review / disposal / ask-pharmacist, with a generated
+  **donor transfer PDF** (`DonationFormGenerator`) you can share/sign
+- QR reconciliation, multi-language voice commands + spoken reminders
+- App icon, accent color, **privacy manifest** (`PrivacyInfo.xcprivacy`),
+  entitlements, and a **unit test** suite for the triage logic
+
+See [`docs/AppStore.md`](docs/AppStore.md) for the submission checklist and listing copy.
+
+### Before relying on it in production
+- Swap the seed data in `ControlledSubstanceChecker` and `StateRulesEngine` for
+  authoritative, maintained datasets (live NDC→DEA schedule + per-state rules).
+- Request the Critical Alerts entitlement from Apple before enabling that style.
+- Add a hosted privacy policy URL.

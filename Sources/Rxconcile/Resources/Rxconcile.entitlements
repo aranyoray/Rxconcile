@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!--
+      App Store ready by default: no special entitlements are enabled, so the build
+      can be submitted as-is.
+
+      To enable the "Critical alert" reminder style (overrides silent switch / DND),
+      first request the entitlement from Apple at
+      https://developer.apple.com/contact/request/notifications-critical-alerts-entitlement/
+      then add, AFTER approval only:
+
+        <key>com.apple.developer.usernotifications.critical-alerts</key>
+        <true/>
+
+      Submitting with this key before approval will cause App Store rejection.
+    -->
+</dict>
+</plist>

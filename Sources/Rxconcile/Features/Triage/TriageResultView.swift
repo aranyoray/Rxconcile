@@ -2,6 +2,8 @@ import SwiftUI
 
 struct TriageResultView: View {
     @AppStorage("stateCode") private var stateCode: String = "TX"
+    @AppStorage("donorName") private var donorName: String = ""
+    @State private var formURL: URL?
     let med: Medication
 
     private var result: TriageResult {
@@ -61,6 +63,22 @@ struct TriageResultView: View {
                     Label("Find a licensed repository (SIRUM)", systemImage: "heart.text.square")
                 }
                 .buttonStyle(.borderedProminent)
+
+                Button {
+                    let donor = DonationFormGenerator.DonorInfo(donorName: donorName, stateCode: stateCode)
+                    formURL = DonationFormGenerator().makePDF(medication: med, donor: donor)
+                } label: {
+                    Label("Generate donor transfer form", systemImage: "doc.text")
+                }
+                .buttonStyle(.bordered)
+
+                if let formURL {
+                    ShareLink(item: formURL) {
+                        Label("Share / sign form", systemImage: "square.and.arrow.up")
+                    }
+                    .buttonStyle(.bordered)
+                }
+
                 Text("A pharmacist or repository confirms final eligibility before accepting the donation.")
                     .font(.caption).foregroundStyle(.secondary)
             case .authorizedDisposal:
