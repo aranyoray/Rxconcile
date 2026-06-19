@@ -94,6 +94,14 @@ Feature-complete MVP, structured for App Store submission:
 
 See [`docs/AppStore.md`](docs/AppStore.md) for the submission checklist and listing copy.
 
+### Continuous integration
+
+`.github/workflows/ci.yml` runs on every push/PR:
+- **Validate datasets** (Ubuntu) — `build_controlled_substances.py --check`.
+- **Build & test** (macOS) — installs XcodeGen + SwiftLint, lints, generates the
+  project, and runs the XCTest suite on an iOS Simulator. SwiftLint config lives
+  in `.swiftlint.yml`.
+
 ### Before relying on it in production
 - Swap the seed data in `ControlledSubstanceChecker` and `StateRulesEngine` for
   authoritative, maintained datasets (live NDC→DEA schedule + per-state rules).
