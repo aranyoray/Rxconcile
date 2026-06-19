@@ -71,14 +71,15 @@ final class ControlledSubstanceCheckerTests: XCTestCase {
 }
 
 final class ReconciliationServiceTests: XCTestCase {
-    func testRoundTrip() {
+    func testRoundTrip() throws {
         let service = ReconciliationService()
         let meds = [Medication(name: "Lisinopril", dosage: "10 mg",
                                form: .sealedBottle, quantityRemaining: 30,
                                schedule: .daily(at: [480]))]
         let payload = service.makePayload(from: meds)
-        let data = try! JSONEncoder.rxconcile.encode(payload)
-        let decoded = service.decode(String(data: data, encoding: .utf8)!)
+        let data = try JSONEncoder.rxconcile.encode(payload)
+        let json = try XCTUnwrap(String(data: data, encoding: .utf8))
+        let decoded = service.decode(json)
         XCTAssertEqual(decoded?.medications.first?.name, "Lisinopril")
         XCTAssertEqual(decoded?.medications.first?.schedule, "1x daily")
     }

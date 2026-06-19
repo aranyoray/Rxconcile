@@ -47,22 +47,23 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
                                 didReceive response: UNNotificationResponse) async {
         let info = response.notification.request.content.userInfo
         guard let idString = info["medID"] as? String, let id = UUID(uuidString: idString) else { return }
+        let actionID = response.actionIdentifier
 
-        await MainActor.run {
+        await MainActor.run { [store] in
             guard let med = store?.medications.first(where: { $0.id == id }) else { return }
 
-            switch response.actionIdentifier {
+            switch actionID {
             case NotificationCategory.takenAction:
                 store?.recordDoseTaken(med)
             case NotificationCategory.snoozeAction:
-                scheduleSnooze(for: med)
+                AppDelegate.scheduleSnooze(for: med)
             default:
                 break
             }
         }
     }
 
-    private func scheduleSnooze(for med: Medication) {
+    private static func scheduleSnooze(for med: Medication) {
         let content = UNMutableNotificationContent()
         content.title = "Snoozed: \(med.name)"
         content.body = "Take \(med.dosage)."

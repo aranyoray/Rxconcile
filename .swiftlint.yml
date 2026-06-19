@@ -22,10 +22,13 @@ opt_in_rules:
   - redundant_nil_coalescing
 
 line_length:
-  warning: 140
-  error: 200
+  warning: 160
+  error: 300            # long user-facing copy strings stay warnings, never fail CI
   ignores_comments: true
   ignores_urls: true
+
+nesting:
+  type_level: 2         # allow e.g. Service.Dataset.File / Service.Payload.Item
 
 type_body_length:
   warning: 400

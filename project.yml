@@ -17,6 +17,9 @@ targets:
     platform: iOS
     sources:
       - path: Sources/Rxconcile
+        excludes:
+          - "Resources/Info.plist"
+          - "Resources/Rxconcile.entitlements"
     info:
       path: Sources/Rxconcile/Resources/Info.plist
       properties:

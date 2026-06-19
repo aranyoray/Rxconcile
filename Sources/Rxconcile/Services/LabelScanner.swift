@@ -15,7 +15,7 @@ struct LabelScanner {
     }
 
     /// NDC appears as 4-4-2, 5-4-1, 5-3-2, or 5-4-2 digit groups.
-    private static let ndcRegex = try! NSRegularExpression(
+    private static let ndcRegex = try? NSRegularExpression(
         pattern: #"\b\d{4,5}-\d{3,4}-\d{1,2}\b"#
     )
 
@@ -41,11 +41,12 @@ struct LabelScanner {
     }
 
     private func firstNDC(in lines: [String]) -> String? {
+        guard let regex = Self.ndcRegex else { return nil }
         for line in lines {
             let range = NSRange(line.startIndex..., in: line)
-            if let m = Self.ndcRegex.firstMatch(in: line, range: range),
-               let r = Range(m.range, in: line) {
-                return String(line[r])
+            if let match = regex.firstMatch(in: line, range: range),
+               let matched = Range(match.range, in: line) {
+                return String(line[matched])
             }
         }
         return nil

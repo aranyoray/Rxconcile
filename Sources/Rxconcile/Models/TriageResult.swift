@@ -10,7 +10,7 @@ struct TriageResult: Identifiable {
     let reasons: [String]
     let medicationName: String
 
-    enum Decision {
+    enum Decision: Equatable {
         /// Eligible to be reviewed by a licensed repository / charitable pharmacy.
         case donationReview
         /// Must go to authorized take-back / DEA disposal.
