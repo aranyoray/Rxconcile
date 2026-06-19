@@ -23,7 +23,8 @@ jobs:
 
   build-test:
     name: Build & test (iOS)
-    runs-on: macos-14
+    # macos-15 ships Xcode 16, which understands the project format XcodeGen emits.
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
 

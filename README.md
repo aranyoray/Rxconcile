@@ -60,6 +60,9 @@ Sources/Rxconcile/
 This repo keeps **sources only**; the Xcode project is generated so the
 `.pbxproj` doesn't churn in git.
 
+Requires **Xcode 16 or newer** (the generated project uses the current Xcode
+project format).
+
 ```bash
 brew install xcodegen        # one-time
 xcodegen generate            # produces Rxconcile.xcodeproj
