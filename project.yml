@@ -1,0 +1,35 @@
+name: Rxconcile
+options:
+  bundleIdPrefix: com.rxconcile
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.9"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  Rxconcile:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/Rxconcile
+    info:
+      path: Sources/Rxconcile/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Rxconcile
+        UILaunchScreen: {}
+        NSCameraUsageDescription: "Used to scan medication labels and reconciliation QR codes."
+        NSMicrophoneUsageDescription: "Used for hands-free voice commands to manage your medications."
+        NSSpeechRecognitionUsageDescription: "Used to understand spoken commands in your chosen language."
+        UIBackgroundModes:
+          - audio
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rxconcile.app
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: NO
