@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "updated": "2026-06-19",
+  "source": "Curated from state board-of-pharmacy / drug repository program statutes. Review against the authoritative statute before relying on any entry.",
+  "states": [
+    { "stateCode": "TX", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 90,  "acceptsGeneralMedications": true,  "notes": "Texas accepts a broad range of sealed donations via charitable pharmacies (Health & Safety Code Ch. 442)." },
+    { "stateCode": "OH", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 90,  "acceptsGeneralMedications": true,  "notes": "Ohio's Drug Repository Program accepts most non-controlled, sealed medications (ORC 3715.871)." },
+    { "stateCode": "CA", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 180, "acceptsGeneralMedications": true,  "notes": "California requires county program participation; longer shelf life preferred (H&S Code 150200+)." },
+    { "stateCode": "IA", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 90,  "acceptsGeneralMedications": true,  "notes": "Iowa SafeNetRx is a mature statewide repository." },
+    { "stateCode": "NY", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 180, "acceptsGeneralMedications": true,  "notes": "New York's Medication Donation/Reuse program operates through participating facilities." },
+    { "stateCode": "FL", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 90,  "acceptsGeneralMedications": true,  "notes": "Florida's cancer/prescription drug donation program runs through enrolled pharmacies." },
+    { "stateCode": "WA", "hasRepositoryProgram": true,  "minimumDaysToExpiry": 180, "acceptsGeneralMedications": true,  "notes": "Washington's Prescription Drug Take-Back & repository programs accept sealed donations." }
+  ]
+}

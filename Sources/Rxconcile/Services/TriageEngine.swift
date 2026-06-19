@@ -12,7 +12,8 @@ struct TriageEngine {
         // 1. Controlled substances can never be routed to donation. Hard stop.
         let verdict = controlledChecker.evaluate(name: med.name, ndc: med.ndc)
         if verdict.isControlled {
-            reasons.append("Appears to be a DEA Schedule \(verdict.schedule.rawValue) controlled substance. Controlled medications cannot be donated and must be surrendered to an authorized take-back location.")
+            reasons.append("Appears to be a DEA Schedule \(verdict.schedule.rawValue) controlled substance. "
+                + "Controlled medications cannot be donated and must be surrendered to an authorized take-back location.")
             return TriageResult(decision: .authorizedDisposal, reasons: reasons, medicationName: med.name)
         }
 

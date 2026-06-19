@@ -6,7 +6,7 @@ options:
   createIntermediateGroups: true
 settings:
   base:
-    MARKETING_VERSION: "0.1.0"
+    MARKETING_VERSION: "1.0.0"
     CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "5.9"
     DEVELOPMENT_TEAM: ""
@@ -17,6 +17,9 @@ targets:
     platform: iOS
     sources:
       - path: Sources/Rxconcile
+        excludes:
+          - "Resources/Info.plist"
+          - "Resources/Rxconcile.entitlements"
     info:
       path: Sources/Rxconcile/Resources/Info.plist
       properties:
@@ -25,6 +28,7 @@ targets:
         NSCameraUsageDescription: "Used to scan medication labels and reconciliation QR codes."
         NSMicrophoneUsageDescription: "Used for hands-free voice commands to manage your medications."
         NSSpeechRecognitionUsageDescription: "Used to understand spoken commands in your chosen language."
+        ITSAppUsesNonExemptEncryption: false
         UIBackgroundModes:
           - audio
     settings:
@@ -32,4 +36,25 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.rxconcile.app
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
-        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: NO
+        CODE_SIGN_ENTITLEMENTS: Sources/Rxconcile/Resources/Rxconcile.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+  RxconcileTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: Rxconcile
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rxconcile.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Rxconcile:
+    build:
+      targets:
+        Rxconcile: all
+    test:
+      targets:
+        - RxconcileTests

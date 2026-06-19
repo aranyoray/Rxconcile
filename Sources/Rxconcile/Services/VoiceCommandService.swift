@@ -56,14 +56,19 @@ final class VoiceCommandService: ObservableObject {
         isListening = true
 
         task = recognizer.recognitionTask(with: request) { [weak self] result, error in
-            guard let self else { return }
-            if let result {
-                self.transcript = result.bestTranscription.formattedString
-                if result.isFinal {
-                    self.lastIntent = Self.parse(self.transcript)
+            // The result handler may be invoked off the main thread; hop back to the
+            // main actor before touching published state.
+            let text = result?.bestTranscription.formattedString
+            let isFinal = result?.isFinal ?? false
+            let failed = error != nil
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                if let text {
+                    self.transcript = text
+                    if isFinal { self.lastIntent = Self.parse(text) }
                 }
+                if failed { self.stop() }
             }
-            if error != nil { self.stop() }
         }
     }
 

@@ -4,6 +4,7 @@ struct SettingsView: View {
     @AppStorage("stateCode") private var stateCode: String = "TX"
     @AppStorage("voiceLanguage") private var voiceLanguage: String = "en-US"
     @AppStorage("defaultReminderStyle") private var reminderStyleRaw: String = ReminderStyle.timeSensitive.rawValue
+    @AppStorage("donorName") private var donorName: String = ""
 
     @StateObject private var voice = VoiceCommandService()
 
@@ -19,6 +20,11 @@ struct SettingsView: View {
                     }
                     Text("Donation rules vary by state. We use this to triage correctly.")
                         .font(.caption).foregroundStyle(.secondary)
+                }
+
+                Section("Donor") {
+                    TextField("Your name (for transfer forms)", text: $donorName)
+                        .textContentType(.name)
                 }
 
                 Section("Reminders") {

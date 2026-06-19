@@ -1,35 +1,23 @@
 import Foundation
 
-/// State-by-state donation rules. Drug donation/repository programs vary widely by
-/// state (some accept cancer drugs only, some require sealed unit-dose, some have no
-/// program at all). This is a simplified rules tree keyed by US state code.
+/// State-by-state donation rules, loaded from the bundled `state_rules.json`. Drug
+/// donation/repository programs vary widely by state, so the dataset is curated and
+/// versioned; update it against the authoritative statute before relying on an entry.
 struct StateRulesEngine {
 
-    struct StateRule {
+    struct StateRule: Decodable {
         let stateCode: String
         let hasRepositoryProgram: Bool
-        /// Minimum days of remaining shelf life a repository will accept.
         let minimumDaysToExpiry: Int
-        /// Whether the program accepts general medications vs. a narrow category only.
         let acceptsGeneralMedications: Bool
         let notes: String
     }
 
-    /// Seed of representative rules. Expand with a maintained dataset per state DOH/board of pharmacy.
-    private static let rules: [String: StateRule] = [
-        "TX": StateRule(stateCode: "TX", hasRepositoryProgram: true, minimumDaysToExpiry: 90,
-                        acceptsGeneralMedications: true,
-                        notes: "Texas accepts a broad range of sealed donations via charitable pharmacies."),
-        "OH": StateRule(stateCode: "OH", hasRepositoryProgram: true, minimumDaysToExpiry: 90,
-                        acceptsGeneralMedications: true,
-                        notes: "Ohio's program accepts most non-controlled, sealed medications."),
-        "CA": StateRule(stateCode: "CA", hasRepositoryProgram: true, minimumDaysToExpiry: 180,
-                        acceptsGeneralMedications: true,
-                        notes: "California requires county program participation; longer shelf life preferred."),
-        "IA": StateRule(stateCode: "IA", hasRepositoryProgram: true, minimumDaysToExpiry: 90,
-                        acceptsGeneralMedications: true,
-                        notes: "Iowa SafeNetRx is a mature statewide repository."),
-    ]
+    private let rules: [String: StateRule]
+
+    init(rules: [String: StateRule] = StateRulesEngine.bundled) {
+        self.rules = rules
+    }
 
     func rule(forState code: String) -> StateRule {
         rules[code.uppercased()] ?? StateRule(
@@ -41,5 +29,20 @@ struct StateRulesEngine {
         )
     }
 
-    static let supportedStateCodes = Array(rules.keys).sorted()
+    var supportedStateCodes: [String] { rules.keys.sorted() }
+
+    // MARK: - Loading
+
+    private struct File: Decodable { let states: [StateRule] }
+
+    static let bundled: [String: StateRule] = load()
+
+    private static func load() -> [String: StateRule] {
+        guard let url = Bundle.main.url(forResource: "state_rules", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let file = try? JSONDecoder().decode(File.self, from: data) else {
+            return [:]
+        }
+        return Dictionary(uniqueKeysWithValues: file.states.map { ($0.stateCode.uppercased(), $0) })
+    }
 }
